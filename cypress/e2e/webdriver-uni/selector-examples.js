@@ -20,7 +20,7 @@ describe("Selector Examples on WebDriverUni", () => {
     cy.get("[class='navbar navbar-inverse navbar-fixed-top']");
 
     // Por atributos diferentes
-    cy.get("input[name='email'][placegholder='Email Address']")
+    cy.get("input[name='email'][placeholder='Email Address']")
 
     // Pelo xpath (necessita do plugin cypress-xpath)
     cy.xpath("//input[@name='first_name']");
