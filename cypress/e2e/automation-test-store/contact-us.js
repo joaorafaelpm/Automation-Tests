@@ -3,8 +3,11 @@
 describe("test contact us form via Automation Test Store", () => {
   it("should be able to submit a successful submission via contact us form", () => {
     cy.visit("https://www.automationteststore.com/");
-    cy.get("a[href$='contact']",).click();
-    // A mesma forma  de fazer  o que foi feito acima,  porém usando xpath
+    cy.get("a[href$='contact']").click()
+    .then((contactUsLinkText) => {
+      cy.log("Clicked on the following link: " , contactUsLinkText.text())
+    });
+    // The same thing was make above using xpath
     // cy.xpath("//a[contains(@href, 'contact')]").click();
     cy.origin('https://automationteststore.com', () => {
         cy.get("#ContactUsFrm_first_name").type("Roberto");
