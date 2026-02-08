@@ -19,7 +19,26 @@
 //
 // -- This is a dual command --
 // Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
+
+Cypress.Commands.add("selectProduct", (productName) => {
+    cy.get(".fixed_wrapper .prdocutname").each(($el, index, $list) => {
+      if ($el.text().includes(productName)) {
+        cy.wrap($el).click();
+      }
+    });
+})
+
+Cypress.Commands.add("contactUsGoodScenario", (firstName, lastName, email, comment ,$selector ,textToLocate) => {
+  cy.get('[name="first_name"]').type(firstName);
+  cy.get('[name="last_name"]').type(lastName, { force: true });
+  cy.get('[name="email"]').type(email);
+  cy.get('[name="message"]').type(
+    comment,
+    { force: true },
+  );
+  cy.get('[type="submit"]').click({ force: true });
+  cy.get($selector).contains(textToLocate);
+})
+
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })

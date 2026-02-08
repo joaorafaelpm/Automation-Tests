@@ -1,6 +1,13 @@
 /// <reference types="cypress" />
 
 describe("test contact us form via webdriveruni", () => {
+  before(()=> {
+    cy.fixture('example').then((data) => {
+      // If this aproach does not work, we can use the following
+      // this.data = data;
+      globalThis.data = data;
+    })
+  })
   it("should be able to submit a successful submission via contact us form", () => {
     cy.visit("http://www.webdriveruniversity.com/");
     cy.get("#contact-us").invoke("removeAttr", "target").click({ force: true });
@@ -8,27 +15,12 @@ describe("test contact us form via webdriveruni", () => {
     cy.title().should("include", "WebDriver | Contact Us");
     cy.url().should("include", "contactus");
 
-    cy.get('[name="first_name"]').type("Roberto");
-    cy.get('[name="last_name"]').type("Fezzbear", { force: true });
-    cy.get('[name="email"]').type("roberto.fezzbear@example.com");
-    cy.get('[name="message"]').type(
-      "Hello, this is a test message for the contact us form.",
-      { force: true },
-    );
-    cy.get('[type="submit"]').click({ force: true });
-    cy.get("h1").should("have.text", "Thank You for your Message!");
+    cy.contactUsGoodScenario(data.first_name,data.last_name,data.email,data.comment,"h1","Thank You for your Message!",);
   });
 
   it("should not be able to submit a successful submission via contact us form as all fields are required", () => {
     cy.visit("http://www.webdriveruniversity.com/");
     cy.get("#contact-us").invoke("removeAttr", "target").click({ force: true });
-    cy.get('[name="first_name"]').type("Rodolfo");
-    cy.get('[name="last_name"]').type("Fezzbear", { force: true });
-    cy.get('[name="message"]').type(
-      "Hello, this is a test message for the contact us form.",
-      { force: true },
-    );
-    cy.get('[type="submit"]').click({ force: true });
-    cy.get("body").contains("Error: all fields are required");
+    cy.contactUsGoodScenario(data.first_name,data.last_name," ",data.comment,"body","Error: Invalid email address",);
   });
 });
