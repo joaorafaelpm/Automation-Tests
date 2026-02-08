@@ -2,7 +2,7 @@
 
 describe("Selector Examples on WebDriverUni", () => {
   it("Examples of  selectors via WebDriverUni", () => {
-    cy.visit("http://www.webdriveruniversity.com/Contact-Us/contactus.html");
+    cy.visit("/Contact-Us/contactus.html");
 
     // Pelo nome da tag
     cy.get("input");
