@@ -1,8 +1,14 @@
 /// <reference types="cypress" />
 
+import Contact_Us_PO from "../../support/pageObjects/webdriver-uni/Contact_Us_PO";
+import HomePage_PO from "../../support/pageObjects/webdriver-uni/Homepage_PO";
+
 describe("test contact us form via webdriveruni", () => {
+  const contactUsPO = new Contact_Us_PO();
+  const homePage_PO = new HomePage_PO();
+
   beforeEach(()=> {
-    cy.visit(Cypress.env("webdriveruni_url") + "/Contact-Us/contactus.html");
+    homePage_PO.visitCustomUrl("/Contact-Us/contactus.html");
   })
   before(()=> {
     cy.fixture('example').then((data) => {
@@ -13,12 +19,32 @@ describe("test contact us form via webdriveruni", () => {
   })
   it("should be able to submit a successful submission via contact us form", () => {
     cy.document().should("have.property", "charset").and("eq", "UTF-8");
+    // cy.pause()
     cy.title().should("include", "WebDriver | Contact Us");
+    // A usefull way to improve our debug in cypress
+    // cy.url().pause().should("include", "contactus");
     cy.url().should("include", "contactus");
-    cy.contactUsGoodScenario(Cypress.env("first_name"),data.last_name,data.email,data.comment,"h1","Thank You for your Message!",);
+
+    // Another way to debug (for example, I need my API to make a request in less than 3s, or smth like that)
+    cy.wait(3000);
+    contactUsPO.contactForm_Submission(
+    Cypress.env("first_name"),
+    data.last_name,
+    data.email,
+    data.comment,
+    "h1",
+    "Thank You for your Message!",
+    );
   });
 
   it("should not be able to submit a successful submission via contact us form as all fields are required", () => {
-    cy.contactUsGoodScenario(data.first_name,data.last_name," ",data.comment,"body","Error: Invalid email address",);
+    contactUsPO.contactForm_Submission(
+      data.first_name,
+      data.last_name,
+      " ",
+      data.comment,
+      "body",
+      "Error: Invalid email address",
+    );
   });
 });

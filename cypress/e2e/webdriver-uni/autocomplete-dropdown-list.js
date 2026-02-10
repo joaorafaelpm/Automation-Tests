@@ -1,8 +1,15 @@
 /// <reference types="cypress" />
 
+import HomePage_PO from "../../support/pageObjects/webdriver-uni/Homepage_PO"; 
+
+
 describe("Interact with autocomplete dropdown lists", () => {
+  // More specific config
+  // Cypress.config('defaultCommandTimeout' , 20000)
+
+  const homePagePO = new HomePage_PO(); 
   it("Select specific product via autocomplete list", () => {
-    cy.visit("/");
+    homePagePO.visitHomePage();
     cy.get("#autocomplete-textfield").invoke("removeAttr", "target").click({ force: true });
      
     cy.get('#myInput').as('myInput').type("A");

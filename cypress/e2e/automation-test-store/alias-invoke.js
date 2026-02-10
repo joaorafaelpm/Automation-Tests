@@ -1,9 +1,15 @@
 /// <reference types="cypress" />
 
-describe("Alias and invoke", () => {
-  it("Validate a specific hair product", () => {
-    cy.visit("https://automationteststore.com/");
+import AutoStore_Homepage_PO from "../../support/pageObjects/automation-test-store/autoStore_HomePage_PO";
 
+describe("Alias and invoke", () => {
+  const autoStore_HomePage = new AutoStore_Homepage_PO();
+
+  beforeEach(() => {
+    autoStore_HomePage.accessHomepage();
+  })
+
+  it("Validate a specific hair product", () => {
     cy.get("a[href*='product/category&path=']").contains("Hair Care").click();
 
     // Instead of using variables to interact with elements between tests or commands
@@ -17,15 +23,11 @@ describe("Alias and invoke", () => {
 
   });
   it("Validate product thumbnail", () => {
-    cy.visit("https://automationteststore.com/");
-
     cy.get(".thumbnail").as("productThumbnail");
     cy.get("@productThumbnail").should("have.length", 16);
     cy.get("@productThumbnail").find(".productcart").invoke("attr", "title").should("include", "Add to Cart");
   });
-  it.only("Calculate total of sale and normal products", () => {
-    cy.visit("https://automationteststore.com/");
-
+  it("Calculate total of sale and normal products", () => {
     cy.get(".thumbnail").as("productThumbnail");
     
     cy.get(".thumbnail").find(".oneprice").invoke("text").as("itemPrice");
