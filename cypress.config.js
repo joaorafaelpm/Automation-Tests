@@ -17,12 +17,11 @@ function getConfigurationByFile(file) {
 }
 
 module.exports = defineConfig({
-  projectId: "1vvroh",
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here
       // With this configuration, you can specify a custom configuration file by adding a "configFile" in a environment variable when running Cypress, for example: "npx cypress open --env configFile=staging" to use the "staging.json" configuration file located in the "cypress/config" directory. If no custom configuration file is specified or found, it will default to an empty configuration object.
-      const file = config.env.configFile || '';
+      const file = config.env.configFile || "";
 
       return getConfigurationByFile(file);
     },
@@ -32,6 +31,7 @@ module.exports = defineConfig({
     specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx,feature}",
     // excludeSpecPattern: "cypress/e2e/other/*.js",
     chromeWebSecurity: false,
+    projectId: "1vvroh",
     defaultCommandTimeout: 10000,
     pageLoadTimeout: 120000,
     baseUrl: "http://www.webdriveruniversity.com/",
@@ -47,9 +47,9 @@ module.exports = defineConfig({
     reporterOptions: {
       configFile: "reporter-config.json",
     },
-    retries : {
-      runMode: 0 ,
-      openMode: 1
+    retries: {
+      runMode: 0,
+      openMode: 1,
     },
     env: {
       first_name: "Sarah",

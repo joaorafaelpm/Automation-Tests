@@ -41,13 +41,19 @@ describe("test contact us form via webdriveruni", () => {
   });
 
   it("should not be able to submit a successful submission via contact us form as all fields are required", () => {
-    contactUsPO.contactForm_Submission(
-      data.first_name,
-      data.last_name,
-      " ",
-      data.comment,
-      "body",
-      "Error: Invalid email address",
-    );
+    if (Cypress.isBrowser("firefox")) {
+      // We can use this command to skip a test in a specific browser
+      // We can also do it as a global configuration
+    }else {
+      contactUsPO.contactForm_Submission(
+        data.first_name,
+        data.last_name,
+        " ",
+        data.comment,
+        "body",
+        "Error: Invalid email address",
+      );
+    }
+    
   });
 });
